@@ -97,7 +97,7 @@ module "ci" {
   source = "../../modules/ci"
 
   name_prefix        = var.name_prefix
-  github_repository  = var.github_repository
+  github_sub_prefix  = var.github_sub_prefix
   ecr_repository_arn = module.ecr.repository_arn
   cluster_name       = module.ecs.cluster_name
   service_name       = module.ecs.service_name

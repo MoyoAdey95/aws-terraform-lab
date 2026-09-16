@@ -22,6 +22,14 @@ resource "aws_iam_openid_connect_provider" "github" {
 # Only tokens for pushes to main in this one repository can assume the role.
 # A fork, a pull request, another branch or any other repository gets a
 # different sub claim and is refused.
+#
+# The repository uses GitHub's immutable subject format, which puts the owner
+# and repository IDs next to their names. The first deploy failed on this.
+# The trust policy expected repo:MoyoAdey95/aws-terraform-lab:..., GitHub sent
+# repo:MoyoAdey95@212127446/aws-terraform-lab@1371825651:..., and AWS refused
+# the token. The IDs are kept deliberately. A name can be freed up and claimed
+# by someone else if the account or repository is renamed or deleted, but the
+# IDs cannot, so a new repository with the same name would not be trusted.
 data "aws_iam_policy_document" "github_trust" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
@@ -40,7 +48,7 @@ data "aws_iam_policy_document" "github_trust" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repository}:ref:refs/heads/main"]
+      values   = ["${var.github_sub_prefix}:ref:refs/heads/main"]
     }
   }
 }

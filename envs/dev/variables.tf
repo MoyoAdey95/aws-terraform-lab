@@ -85,8 +85,11 @@ variable "alert_email" {
   sensitive   = true
 }
 
-variable "github_repository" {
-  description = "GitHub repository allowed to deploy, as owner/name."
+# Read from GitHub with
+# gh api repos/MoyoAdey95/aws-terraform-lab/actions/oidc/customization/sub
+# rather than written by hand. The numbers are the owner and repository IDs.
+variable "github_sub_prefix" {
+  description = "Start of the OIDC sub claim GitHub issues for this repository."
   type        = string
-  default     = "MoyoAdey95/aws-terraform-lab"
+  default     = "repo:MoyoAdey95@212127446/aws-terraform-lab@1371825651"
 }

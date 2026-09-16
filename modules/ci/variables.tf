@@ -3,8 +3,8 @@ variable "name_prefix" {
   type        = string
 }
 
-variable "github_repository" {
-  description = "GitHub repository allowed to assume the deploy role, as owner/name."
+variable "github_sub_prefix" {
+  description = "Start of the OIDC sub claim GitHub issues for the repository, before :ref:..."
   type        = string
 }
 

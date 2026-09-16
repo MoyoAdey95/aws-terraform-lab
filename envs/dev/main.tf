@@ -41,3 +41,13 @@ module "ecs" {
   execution_role_arn = module.iam.execution_role_arn
   task_role_arn      = module.iam.task_role_arn
 }
+
+module "alb" {
+  source = "../../modules/alb"
+
+  name_prefix           = var.name_prefix
+  vpc_id                = module.network.vpc_id
+  subnet_ids            = module.network.public_subnet_ids
+  alb_security_group_id = module.network.alb_security_group_id
+  app_port              = var.app_port
+}

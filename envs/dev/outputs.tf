@@ -42,3 +42,8 @@ output "task_definition_arn" {
   description = "ARN of the current task definition revision."
   value       = module.ecs.task_definition_arn
 }
+
+output "alb_dns_name" {
+  description = "Public DNS name of the load balancer."
+  value       = module.alb.dns_name
+}

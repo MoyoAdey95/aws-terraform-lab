@@ -47,6 +47,15 @@ resource "aws_ecs_task_definition" "app" {
       image     = var.image
       essential = true
 
+      # Resolved by ECS when the task starts, using the execution role. The
+      # value is never in the task definition, only the secret's ARN.
+      secrets = [
+        {
+          name      = "APP_MESSAGE"
+          valueFrom = var.app_message_secret_arn
+        }
+      ]
+
       portMappings = [
         {
           containerPort = var.app_port

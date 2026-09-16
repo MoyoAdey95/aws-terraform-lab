@@ -77,6 +77,15 @@ data "aws_iam_policy_document" "execution" {
     ]
     resources = ["${local.log_group_arn}:*"]
   }
+
+  # ECS reads the secret with the execution role and hands the value to the
+  # container as an environment variable. The app never calls Secrets
+  # Manager itself, which is why this sits here and not on the task role.
+  statement {
+    sid       = "ReadAppSecret"
+    actions   = ["secretsmanager:GetSecretValue"]
+    resources = [var.app_secret_arn]
+  }
 }
 
 resource "aws_iam_role_policy" "execution" {

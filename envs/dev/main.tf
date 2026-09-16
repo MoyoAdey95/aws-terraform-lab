@@ -7,6 +7,27 @@ locals {
   log_group_name = "/ecs/${var.name_prefix}-api"
 }
 
+# The demo secret lives here rather than in a module, as it did in
+# gcp-terraform-lab. One secret with no reuse story does not need a module.
+#
+# recovery_window_in_days = 0 deletes it immediately on destroy. The default
+# keeps a deleted secret for 30 days, and its name cannot be reused until then,
+# so a destroy followed by a fresh apply would fail.
+resource "aws_secretsmanager_secret" "app_message" {
+  name                    = "${var.name_prefix}/app-message"
+  description             = "Message returned by the demo app, injected as APP_MESSAGE."
+  recovery_window_in_days = 0
+}
+
+# The value is written by Terraform, so it is stored in the state file. That
+# is acceptable here because the state bucket is private and encrypted and the
+# value is a demo string. For a real secret the value would be set outside
+# Terraform. See docs/production-deltas.md.
+resource "aws_secretsmanager_secret_version" "app_message" {
+  secret_id     = aws_secretsmanager_secret.app_message.id
+  secret_string = var.app_message
+}
+
 module "network" {
   source = "../../modules/network"
 
@@ -29,6 +50,7 @@ module "iam" {
   name_prefix        = var.name_prefix
   ecr_repository_arn = module.ecr.repository_arn
   log_group_name     = local.log_group_name
+  app_secret_arn     = aws_secretsmanager_secret.app_message.arn
 }
 
 module "ecs" {
@@ -40,6 +62,8 @@ module "ecs" {
   app_port           = var.app_port
   execution_role_arn = module.iam.execution_role_arn
   task_role_arn      = module.iam.task_role_arn
+
+  app_message_secret_arn = aws_secretsmanager_secret.app_message.arn
 
   subnet_ids              = module.network.public_subnet_ids
   tasks_security_group_id = module.network.tasks_security_group_id

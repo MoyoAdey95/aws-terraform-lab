@@ -69,3 +69,10 @@ variable "image_tag" {
   type        = string
   default     = "v2"
 }
+
+variable "app_message" {
+  description = "Value stored in the demo secret and returned by the app."
+  type        = string
+  sensitive   = true
+  default     = "hello from secrets manager"
+}

@@ -66,3 +66,8 @@ variable "target_group_arn" {
   description = "Target group the service registers tasks in."
   type        = string
 }
+
+variable "app_message_secret_arn" {
+  description = "ARN of the Secrets Manager secret injected as APP_MESSAGE."
+  type        = string
+}

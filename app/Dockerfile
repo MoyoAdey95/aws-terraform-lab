@@ -12,6 +12,17 @@ RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
 # runtime stage: copy only what we need
 FROM python:3.12-slim
 
+# The first ECR scan of this image found 6 critical and 12 high CVEs, all in
+# Debian packages that ship with the base image (perl, glibc, sqlite3, pcre2,
+# zlib) and none in the app or its Python dependencies. Debian had already
+# published fixes for most of them, but the upstream python image had not
+# been rebuilt to include them. Upgrading here pulls those fixes in at build
+# time. The trade-off is that two builds on different days can differ, so the
+# scan result is checked on every push rather than assumed.
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN useradd --create-home --uid 1001 appuser
 
 WORKDIR /app

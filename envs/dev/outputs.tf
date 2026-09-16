@@ -52,3 +52,8 @@ output "ecs_service_name" {
   description = "Name of the ECS service."
   value       = module.ecs.service_name
 }
+
+output "alarm_name" {
+  description = "Name of the no healthy targets alarm."
+  value       = module.monitoring.alarm_name
+}

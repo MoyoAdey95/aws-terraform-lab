@@ -76,3 +76,11 @@ variable "app_message" {
   sensitive   = true
   default     = "hello from secrets manager"
 }
+
+# No default, so no address is committed to a public repo. Set it in the
+# shell with TF_VAR_alert_email or in an untracked terraform.tfvars file.
+variable "alert_email" {
+  description = "Email address that receives alarm notifications."
+  type        = string
+  sensitive   = true
+}

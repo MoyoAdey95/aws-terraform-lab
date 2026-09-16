@@ -83,3 +83,12 @@ module "alb" {
   alb_security_group_id = module.network.alb_security_group_id
   app_port              = var.app_port
 }
+
+module "monitoring" {
+  source = "../../modules/monitoring"
+
+  name_prefix             = var.name_prefix
+  alert_email             = var.alert_email
+  alb_arn_suffix          = module.alb.alb_arn_suffix
+  target_group_arn_suffix = module.alb.target_group_arn_suffix
+}

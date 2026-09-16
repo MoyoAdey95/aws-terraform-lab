@@ -40,6 +40,14 @@ module "ecs" {
   app_port           = var.app_port
   execution_role_arn = module.iam.execution_role_arn
   task_role_arn      = module.iam.task_role_arn
+
+  subnet_ids              = module.network.public_subnet_ids
+  tasks_security_group_id = module.network.tasks_security_group_id
+  target_group_arn        = module.alb.target_group_arn
+
+  # ECS refuses to attach a service to a target group that has no listener
+  # yet. This makes a fresh apply create the load balancer side first.
+  depends_on = [module.alb]
 }
 
 module "alb" {

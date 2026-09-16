@@ -27,3 +27,30 @@ variable "owner" {
   type        = string
   default     = "moyo"
 }
+
+variable "name_prefix" {
+  description = "Prefix for resource names."
+  type        = string
+  default     = "aws-lab"
+}
+
+variable "vpc_cidr" {
+  description = "CIDR block for the VPC. Kept clear of the 10.10.0.0/24 range used in gcp-terraform-lab."
+  type        = string
+  default     = "10.20.0.0/16"
+}
+
+# Zone names are set explicitly rather than read from a data source, so the
+# plan always shows where things will go. Checked with
+# aws ec2 describe-availability-zones on 16 Sep 2026.
+variable "azs" {
+  description = "Availability zones for the public subnets."
+  type        = list(string)
+  default     = ["eu-west-2a", "eu-west-2b"]
+}
+
+variable "public_subnet_cidrs" {
+  description = "CIDR blocks for the public subnets, in the same order as azs."
+  type        = list(string)
+  default     = ["10.20.1.0/24", "10.20.2.0/24"]
+}

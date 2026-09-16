@@ -1,0 +1,23 @@
+# captured 2026-09-16T16:30:30Z
+# aws elbv2 describe-target-health --target-group-arn $(aws elbv2 describe-target-groups --names aws-lab-api --region eu-west-2 --profile personal --query 'TargetGroups[0].TargetGroupArn' --output text) --region eu-west-2 --profile personal --output json
+
+{
+    "TargetHealthDescriptions": [
+        {
+            "Target": {
+                "Id": "10.20.2.131",
+                "Port": 8080,
+                "AvailabilityZone": "eu-west-2b"
+            },
+            "HealthCheckPort": "8080",
+            "TargetHealth": {
+                "State": "healthy"
+            },
+            "AdministrativeOverride": {
+                "State": "no_override",
+                "Reason": "AdministrativeOverride.NoOverride",
+                "Description": "No override is currently active on target"
+            }
+        }
+    ]
+}

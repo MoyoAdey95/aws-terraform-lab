@@ -1,0 +1,20 @@
+# captured 2026-09-16T16:30:27Z
+# curl -s -i http://aws-lab-alb-1814706691.eu-west-2.elb.amazonaws.com/ ; echo; echo; curl -s -i http://aws-lab-alb-1814706691.eu-west-2.elb.amazonaws.com/health
+
+HTTP/1.1 200 OK
+Date: Wed, 16 Sep 2026 16:30:28 GMT
+Content-Type: application/json
+Content-Length: 63
+Connection: keep-alive
+server: uvicorn
+
+{"service":"tf-lab-api","message":"hello from secrets manager"}
+
+HTTP/1.1 200 OK
+Date: Wed, 16 Sep 2026 16:30:28 GMT
+Content-Type: application/json
+Content-Length: 15
+Connection: keep-alive
+server: uvicorn
+
+{"status":"ok"}

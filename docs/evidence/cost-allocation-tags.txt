@@ -1,0 +1,13 @@
+# captured 2026-09-16T16:33:46Z
+# aws ce list-cost-allocation-tags --tag-keys project env owner managed-by
+
+--------------------------------------------------
+|             ListCostAllocationTags             |
++-------------+------------------------+---------+
+|     key     |      lastUpdated       | status  |
++-------------+------------------------+---------+
+|  managed-by |  2026-09-16T16:33:36Z  |  Active |
+|  env        |  2026-09-16T16:33:36Z  |  Active |
+|  owner      |  2026-09-16T16:33:36Z  |  Active |
+|  project    |  2026-09-16T16:33:36Z  |  Active |
++-------------+------------------------+---------+

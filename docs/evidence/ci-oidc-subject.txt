@@ -1,0 +1,4 @@
+# captured 2026-09-16T16:30:55Z
+# gh api repos/MoyoAdey95/aws-terraform-lab/actions/oidc/customization/sub
+
+{"use_default":true,"use_immutable_subject":true,"sub_claim_prefix":"repo:MoyoAdey95@212127446/aws-terraform-lab@1371825651"}

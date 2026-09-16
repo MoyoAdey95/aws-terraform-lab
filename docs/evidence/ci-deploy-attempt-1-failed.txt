@@ -1,0 +1,23 @@
+# captured 2026-09-16T16:30:56Z
+# gh run view 35119853165 --repo MoyoAdey95/aws-terraform-lab --attempt 1 --log-failed | tail -20
+
+deploy	Assume the deploy role	2026-09-16T16:07:35.7524601Z   ROLE_ARN: arn:aws:iam::495599741450:role/aws-lab-github-deploy
+deploy	Assume the deploy role	2026-09-16T16:07:35.7524911Z   ECR_REPOSITORY: aws-lab-api
+deploy	Assume the deploy role	2026-09-16T16:07:35.7525132Z   ECS_CLUSTER: aws-lab-cluster
+deploy	Assume the deploy role	2026-09-16T16:07:35.7525412Z   ECS_SERVICE: aws-lab-api
+deploy	Assume the deploy role	2026-09-16T16:07:35.7525632Z   TASK_FAMILY: aws-lab-api
+deploy	Assume the deploy role	2026-09-16T16:07:35.7525835Z   CONTAINER_NAME: api
+deploy	Assume the deploy role	2026-09-16T16:07:35.7526024Z ##[endgroup]
+deploy	Assume the deploy role	2026-09-16T16:07:36.1191299Z Assuming role with OIDC
+deploy	Assume the deploy role	2026-09-16T16:07:36.5346132Z Assuming role with OIDC
+deploy	Assume the deploy role	2026-09-16T16:07:36.6928462Z Assuming role with OIDC
+deploy	Assume the deploy role	2026-09-16T16:07:36.8329603Z Assuming role with OIDC
+deploy	Assume the deploy role	2026-09-16T16:07:37.2108609Z Assuming role with OIDC
+deploy	Assume the deploy role	2026-09-16T16:07:37.9470914Z Assuming role with OIDC
+deploy	Assume the deploy role	2026-09-16T16:07:38.1224481Z Assuming role with OIDC
+deploy	Assume the deploy role	2026-09-16T16:07:39.7018904Z Assuming role with OIDC
+deploy	Assume the deploy role	2026-09-16T16:07:41.0251012Z Assuming role with OIDC
+deploy	Assume the deploy role	2026-09-16T16:07:41.6021531Z Assuming role with OIDC
+deploy	Assume the deploy role	2026-09-16T16:07:55.7204493Z Assuming role with OIDC
+deploy	Assume the deploy role	2026-09-16T16:08:45.8037455Z Assuming role with OIDC
+deploy	Assume the deploy role	2026-09-16T16:09:59.3582404Z ##[error]Could not assume role with OIDC: Not authorized to perform sts:AssumeRoleWithWebIdentity

@@ -1,0 +1,27 @@
+# captured 2026-09-16T16:30:50Z
+# for t in v1 v2 87e5315cc810b8f997929755e1f09b2c7430d64f; do echo "== $t"; aws ecr describe-image-scan-findings --repository-name aws-lab-api --image-id imageTag=$t --region eu-west-2 --profile personal --query '{status:imageScanStatus.status,counts:imageScanFindings.findingSeverityCounts}' --output json; done
+
+== v1
+{
+    "status": "COMPLETE",
+    "counts": {
+        "HIGH": 12,
+        "MEDIUM": 5,
+        "LOW": 4,
+        "CRITICAL": 6
+    }
+}
+== v2
+{
+    "status": "COMPLETE",
+    "counts": {
+        "HIGH": 1
+    }
+}
+== 87e5315cc810b8f997929755e1f09b2c7430d64f
+{
+    "status": "COMPLETE",
+    "counts": {
+        "HIGH": 1
+    }
+}

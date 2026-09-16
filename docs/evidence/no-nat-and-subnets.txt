@@ -1,0 +1,13 @@
+# captured 2026-09-16T16:30:34Z
+# aws ec2 describe-nat-gateways --region eu-west-2 --profile personal --filter Name=vpc-id,Values=vpc-0cf425d23d65ae57e --query 'NatGateways[].NatGatewayId' --output json; echo; aws ec2 describe-subnets --region eu-west-2 --profile personal --filters Name=vpc-id,Values=vpc-0cf425d23d65ae57e --query 'Subnets[].{az:AvailabilityZone,cidr:CidrBlock,mapPublicIpOnLaunch:MapPublicIpOnLaunch}' --output table
+
+[]
+
+-------------------------------------------------------
+|                   DescribeSubnets                   |
++------------+----------------+-----------------------+
+|     az     |     cidr       |  mapPublicIpOnLaunch  |
++------------+----------------+-----------------------+
+|  eu-west-2b|  10.20.2.0/24  |  False                |
+|  eu-west-2a|  10.20.1.0/24  |  False                |
++------------+----------------+-----------------------+

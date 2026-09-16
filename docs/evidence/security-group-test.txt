@@ -1,0 +1,9 @@
+# captured 2026-09-16T16:30:36Z
+# TASK=$(aws ecs list-tasks --cluster aws-lab-cluster --service-name aws-lab-api --region eu-west-2 --profile personal --query 'taskArns[0]' --output text); ENI=$(aws ecs describe-tasks --cluster aws-lab-cluster --tasks $TASK --region eu-west-2 --profile personal --query "tasks[0].attachments[0].details[?name=='networkInterfaceId'].value" --output text); IP=$(aws ec2 describe-network-interfaces --network-interface-ids $ENI --region eu-west-2 --profile personal --query 'NetworkInterfaces[0].Association.PublicIp' --output text); echo "task public IP $IP"; echo 'direct to task on 8080:'; curl -s -m 10 http://$IP:8080/health || echo 'timed out (blocked by tasks security group)'; echo; echo 'through the load balancer:'; curl -s http://aws-lab-alb-1814706691.eu-west-2.elb.amazonaws.com/health
+
+task public IP 13.41.55.52
+direct to task on 8080:
+timed out (blocked by tasks security group)
+
+through the load balancer:
+{"status":"ok"}

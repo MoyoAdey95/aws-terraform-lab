@@ -1,0 +1,66 @@
+# captured 2026-09-16T16:30:28Z
+# aws ecs describe-services --cluster aws-lab-cluster --services aws-lab-api --region eu-west-2 --profile personal --query 'services[0].{taskDefinition:taskDefinition,desired:desiredCount,running:runningCount,launchType:launchType,deployments:deployments[].{status:status,rollout:rolloutState,taskDefinition:taskDefinition},recentEvents:events[:12].[createdAt,message]}' --output json
+
+{
+    "taskDefinition": "arn:aws:ecs:eu-west-2:495599741450:task-definition/aws-lab-api:3",
+    "desired": 1,
+    "running": 1,
+    "launchType": "FARGATE",
+    "deployments": [
+        {
+            "status": "PRIMARY",
+            "rollout": "COMPLETED",
+            "taskDefinition": "arn:aws:ecs:eu-west-2:495599741450:task-definition/aws-lab-api:3"
+        }
+    ],
+    "recentEvents": [
+        [
+            "2026-09-16T17:21:43.082000+01:00",
+            "(service aws-lab-api) has reached a steady state."
+        ],
+        [
+            "2026-09-16T17:21:43.081000+01:00",
+            "(service aws-lab-api) (deployment ecs-svc/2259795280927176383) deployment completed."
+        ],
+        [
+            "2026-09-16T17:20:50.565000+01:00",
+            "(service aws-lab-api, taskSet ecs-svc/3619943966419936741) has begun draining connections on 1 tasks."
+        ],
+        [
+            "2026-09-16T17:20:50.559000+01:00",
+            "(service aws-lab-api) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-2:495599741450:targetgroup/aws-lab-api/5968bfbf37425b4a)"
+        ],
+        [
+            "2026-09-16T17:20:41.344000+01:00",
+            "(service aws-lab-api) has stopped 1 running tasks: (task 26dad2126927418b9b8af0de84798249)."
+        ],
+        [
+            "2026-09-16T17:19:59.456000+01:00",
+            "(service aws-lab-api) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-2:495599741450:targetgroup/aws-lab-api/5968bfbf37425b4a)"
+        ],
+        [
+            "2026-09-16T17:19:39.324000+01:00",
+            "(service aws-lab-api) has started 1 tasks: (task 96d655cc13ab4947a0138505b5dd34da)."
+        ],
+        [
+            "2026-09-16T16:38:15.489000+01:00",
+            "(service aws-lab-api) has reached a steady state."
+        ],
+        [
+            "2026-09-16T16:38:06.207000+01:00",
+            "(service aws-lab-api) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-2:495599741450:targetgroup/aws-lab-api/5968bfbf37425b4a)"
+        ],
+        [
+            "2026-09-16T16:37:47.118000+01:00",
+            "(service aws-lab-api) has started 1 tasks: (task 26dad2126927418b9b8af0de84798249)."
+        ],
+        [
+            "2026-09-16T16:23:31.061000+01:00",
+            "(service aws-lab-api) has reached a steady state."
+        ],
+        [
+            "2026-09-16T16:23:30.991000+01:00",
+            "(service aws-lab-api, taskSet ecs-svc/3619943966419936741) has begun draining connections on 1 tasks."
+        ]
+    ]
+}

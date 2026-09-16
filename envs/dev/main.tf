@@ -92,3 +92,15 @@ module "monitoring" {
   alb_arn_suffix          = module.alb.alb_arn_suffix
   target_group_arn_suffix = module.alb.target_group_arn_suffix
 }
+
+module "ci" {
+  source = "../../modules/ci"
+
+  name_prefix        = var.name_prefix
+  github_repository  = var.github_repository
+  ecr_repository_arn = module.ecr.repository_arn
+  cluster_name       = module.ecs.cluster_name
+  service_name       = module.ecs.service_name
+  execution_role_arn = module.iam.execution_role_arn
+  task_role_arn      = module.iam.task_role_arn
+}

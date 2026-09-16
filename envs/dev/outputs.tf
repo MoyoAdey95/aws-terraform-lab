@@ -57,3 +57,8 @@ output "alarm_name" {
   description = "Name of the no healthy targets alarm."
   value       = module.monitoring.alarm_name
 }
+
+output "github_deploy_role_arn" {
+  description = "ARN of the role GitHub Actions assumes to deploy."
+  value       = module.ci.github_deploy_role_arn
+}

@@ -84,3 +84,9 @@ variable "alert_email" {
   type        = string
   sensitive   = true
 }
+
+variable "github_repository" {
+  description = "GitHub repository allowed to deploy, as owner/name."
+  type        = string
+  default     = "MoyoAdey95/aws-terraform-lab"
+}

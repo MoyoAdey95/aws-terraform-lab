@@ -22,3 +22,13 @@ output "ecr_repository_url" {
   description = "URL of the app image repository."
   value       = module.ecr.repository_url
 }
+
+output "execution_role_arn" {
+  description = "ARN of the task execution role."
+  value       = module.iam.execution_role_arn
+}
+
+output "task_role_arn" {
+  description = "ARN of the task role."
+  value       = module.iam.task_role_arn
+}

@@ -35,4 +35,13 @@ resource "aws_ecs_service" "app" {
     enable   = true
     rollback = true
   }
+
+  # Once CI is deploying, the service runs whatever revision the pipeline last
+  # registered. Without this, every terraform apply would roll the service back
+  # to the revision Terraform created. The trade-off is that a task definition
+  # change made in Terraform no longer deploys itself, so it has to go out
+  # through the pipeline or a manual update-service.
+  lifecycle {
+    ignore_changes = [task_definition]
+  }
 }

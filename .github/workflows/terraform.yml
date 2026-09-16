@@ -1,0 +1,30 @@
+# Formatting and validation on every push. Needs no AWS access, because
+# init runs without the backend and validate never calls the provider.
+name: terraform
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.15.5"
+
+      - name: Format
+        run: terraform fmt -check -recursive
+
+      - name: Validate
+        working-directory: envs/dev
+        run: |
+          terraform init -backend=false
+          terraform validate

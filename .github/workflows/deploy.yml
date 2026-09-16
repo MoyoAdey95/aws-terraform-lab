@@ -1,0 +1,82 @@
+# Builds the app image, pushes it to ECR and rolls the ECS service onto it.
+#
+# Authentication is OIDC. The job asks GitHub for a token, AWS checks it
+# against the trust policy on aws-lab-github-deploy, and the job gets
+# temporary credentials for that role. There are no AWS secrets in this
+# repository. The role ARN below is an identifier, not a credential.
+#
+# Only changes to the app or to this file trigger a deploy, so documentation
+# commits do not redeploy, and nothing fails here once the lab is torn down.
+name: deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: eu-west-2
+  ROLE_ARN: arn:aws:iam::495599741450:role/aws-lab-github-deploy
+  ECR_REPOSITORY: aws-lab-api
+  ECS_CLUSTER: aws-lab-cluster
+  ECS_SERVICE: aws-lab-api
+  TASK_FAMILY: aws-lab-api
+  CONTAINER_NAME: api
+
+jobs:
+  deploy:
+    # Fargate runs this task on ARM64, so the image is built on an ARM
+    # runner and never cross-compiled.
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assume the deploy role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Log in to ECR
+        id: ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # Tagged with the commit SHA. The repository has immutable tags, so every
+      # image name points at exactly one build and can be traced to a commit.
+      - name: Build and push
+        id: image
+        env:
+          IMAGE: ${{ steps.ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+        run: |
+          docker build -t "$IMAGE" app/
+          docker push "$IMAGE"
+          echo "image=$IMAGE" >> "$GITHUB_OUTPUT"
+
+      - name: Fetch the current task definition
+        run: |
+          aws ecs describe-task-definition \
+            --task-definition "$TASK_FAMILY" \
+            --query taskDefinition > task-definition.json
+
+      - name: Swap in the new image
+        id: render
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ steps.image.outputs.image }}
+
+      - name: Register the revision and deploy
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.render.outputs.task-definition }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          service: ${{ env.ECS_SERVICE }}
+          wait-for-service-stability: true

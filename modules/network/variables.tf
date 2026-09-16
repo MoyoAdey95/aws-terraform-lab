@@ -22,3 +22,8 @@ variable "public_subnet_cidrs" {
   description = "CIDR blocks for the public subnets, in the same order as azs."
   type        = list(string)
 }
+
+variable "app_port" {
+  description = "Port the application container listens on."
+  type        = number
+}

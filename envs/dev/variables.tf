@@ -54,3 +54,10 @@ variable "public_subnet_cidrs" {
   type        = list(string)
   default     = ["10.20.1.0/24", "10.20.2.0/24"]
 }
+
+# Matches the PORT the repo 1 container listens on.
+variable "app_port" {
+  description = "Port the application container listens on."
+  type        = number
+  default     = 8080
+}

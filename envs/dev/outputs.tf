@@ -17,3 +17,8 @@ output "tasks_security_group_id" {
   description = "ID of the ECS tasks security group."
   value       = module.network.tasks_security_group_id
 }
+
+output "ecr_repository_url" {
+  description = "URL of the app image repository."
+  value       = module.ecr.repository_url
+}

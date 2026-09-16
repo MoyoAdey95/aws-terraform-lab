@@ -10,3 +10,9 @@ module "network" {
   public_subnet_cidrs = var.public_subnet_cidrs
   app_port            = var.app_port
 }
+
+module "ecr" {
+  source = "../../modules/ecr"
+
+  name_prefix = var.name_prefix
+}

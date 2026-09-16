@@ -32,3 +32,13 @@ output "task_role_arn" {
   description = "ARN of the task role."
   value       = module.iam.task_role_arn
 }
+
+output "ecs_cluster_name" {
+  description = "Name of the ECS cluster."
+  value       = module.ecs.cluster_name
+}
+
+output "task_definition_arn" {
+  description = "ARN of the current task definition revision."
+  value       = module.ecs.task_definition_arn
+}

@@ -61,3 +61,11 @@ variable "app_port" {
   type        = number
   default     = 8080
 }
+
+# Tags in the repository are immutable, so this names one exact image. v2 is
+# the build with the base image packages upgraded.
+variable "image_tag" {
+  description = "Tag of the app image in ECR to run."
+  type        = string
+  default     = "v2"
+}

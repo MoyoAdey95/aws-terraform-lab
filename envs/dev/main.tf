@@ -30,3 +30,14 @@ module "iam" {
   ecr_repository_arn = module.ecr.repository_arn
   log_group_name     = local.log_group_name
 }
+
+module "ecs" {
+  source = "../../modules/ecs"
+
+  name_prefix        = var.name_prefix
+  log_group_name     = local.log_group_name
+  image              = "${module.ecr.repository_url}:${var.image_tag}"
+  app_port           = var.app_port
+  execution_role_arn = module.iam.execution_role_arn
+  task_role_arn      = module.iam.task_role_arn
+}

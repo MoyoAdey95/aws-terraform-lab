@@ -82,4 +82,10 @@ The captured output for all of these is in [docs/evidence](docs/evidence/). [doc
 terraform destroy
 ```
 
-`force_delete` on the ECR repository and a zero-day recovery window on the secret mean destroy is not blocked by images or a pending secret deletion. The state bucket is not managed by Terraform and stays.
+Destroy removed all 34 resources in one run. `force_delete` on the ECR repository and a zero-day recovery window on the secret mean it is not blocked by images or a pending secret deletion. The state bucket is not managed by Terraform and stays, holding an empty state file.
+
+Two things came up. The internet gateway took almost three minutes to delete, because it could not go until the last task had drained and its network interface and public IP were released. And the task definition revision that CI registered was never in Terraform's state, so destroy left it behind. It costs nothing, but I deregistered and deleted it by hand. After that, a sweep of ECS, the load balancer, ECR, CloudWatch, Secrets Manager, the VPC, network interfaces, Elastic IPs, SNS, IAM and the OIDC provider came back empty.
+
+## Cost
+
+The whole build came to about $0.24, from Cost Explorer the day after teardown (still marked as an estimate). Nearly all of it was the few hours the stack was running. The load balancer was $0.13, public IPv4 addresses $0.06 and Fargate $0.04, with Secrets Manager, S3 and ECR adding a fraction of a cent between them. `docs/evidence/cost.txt` has the breakdown.

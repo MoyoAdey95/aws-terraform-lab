@@ -1,0 +1,62 @@
+# captured 2026-09-17T06:34:05Z
+# aws ce get-cost-and-usage, 15 to 17 September 2026, daily, by service, unblended
+
+[
+    {
+        "day": "2026-09-15",
+        "estimated": true,
+        "costs": [
+            [
+                "AWS Secrets Manager",
+                "0.000005"
+            ],
+            [
+                "Amazon Simple Storage Service",
+                "0.0001073064"
+            ]
+        ]
+    },
+    {
+        "day": "2026-09-16",
+        "estimated": true,
+        "costs": [
+            [
+                "AWS Secrets Manager",
+                "0.0021034717"
+            ],
+            [
+                "Amazon EC2 Container Registry (ECR)",
+                "0.0000591308"
+            ],
+            [
+                "Amazon Elastic Container Service",
+                "0.0442690113"
+            ],
+            [
+                "Amazon Elastic Load Balancing",
+                "0.1323082281"
+            ],
+            [
+                "Amazon Simple Storage Service",
+                "0.0006488987"
+            ],
+            [
+                "Amazon Virtual Private Cloud",
+                "0.063091675"
+            ]
+        ]
+    },
+    {
+        "day": "2026-09-17",
+        "estimated": true,
+        "costs": []
+    }
+]
+
+# total
+[
+    {
+        "Amount": "0.242592722",
+        "Unit": "USD"
+    }
+]
